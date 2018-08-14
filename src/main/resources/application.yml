@@ -1,3 +1,14 @@
 logging:
   level:
     software.hoegg.okcjug: INFO
+device:
+  location:
+    latitude: 35.46679
+    longitude: -97.5343547
+api:
+  weather-unlocked:
+    app-id: 12345678
+    key: aaaaaaaaaaaaaaaaaa
+weather:
+  ribbon:
+    listOfServers: api.weatherunlocked.com
