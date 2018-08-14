@@ -3,6 +3,8 @@ package software.hoegg.okcjug.api;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import feign.RequestInterceptor;
 import feign.RequestTemplate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.context.annotation.Bean;
@@ -14,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import software.hoegg.okcjug.DeviceInfo;
 import software.hoegg.okcjug.config.WeatherUnlockedConfig;
 
-@FeignClient(name = "weather", configuration = WeatherUnlockedClient.ApiConfig.class)
+@FeignClient(name = "weather", configuration = WeatherUnlockedClient.ApiConfig.class, fallback = WeatherUnlockedClient.Fallback.class)
 @Service
 public interface WeatherUnlockedClient {
 
@@ -77,6 +79,7 @@ public interface WeatherUnlockedClient {
 
 	@Service
 	public static class Fallback implements WeatherUnlockedClient {
+		Logger logger = LoggerFactory.getLogger(this.getClass());
 		@Autowired
 		private YahooWeatherClient yahooWeatherClient;
 		@Autowired
@@ -84,6 +87,7 @@ public interface WeatherUnlockedClient {
 
 		@Override
 		public WeatherInfo currentWeather(String location) {
+			logger.warn("Using fallback weather service");
 			YahooWeatherClient.WeatherInfo yahooWeather = yahooWeatherClient.currentWeather();
 			WeatherInfo weather = new WeatherInfo();
 			weather.setWeather(yahooWeather.getWeather());

@@ -16,7 +16,24 @@ api:
     client-secret: 22222222222222222222222222222222
 weather:
   ribbon:
-    listOfServers: http://api.weatherunlocked.com
+    #listOfServers: http://api.weatherunlocked.com
+    listOfServers: http://1.2.3.4
 yahoo:
   ribbon:
     listOfServers: https://weather-ydn-yql.media.yahoo.com
+ribbon:
+  eureka:
+    enabled: false
+  MaxAutoRetries: 2
+  MaxAutoRetriesNextServer: 1
+  ReadTimeout: 2000
+feign:
+  hystrix:
+    enabled: true
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 2000
