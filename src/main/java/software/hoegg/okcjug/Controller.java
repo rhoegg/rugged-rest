@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import software.hoegg.okcjug.api.WeatherUnlockedClient;
+import software.hoegg.okcjug.api.YahooWeatherClient;
 import software.hoegg.okcjug.model.ScreenInfo;
 
 import java.text.DateFormat;
@@ -15,6 +16,8 @@ public class Controller {
 	private DateFormat legibleDate;
 	@Autowired
 	private WeatherUnlockedClient weatherUnlockedClient;
+	@Autowired
+	private YahooWeatherClient yahooWeatherClient;
 	@Autowired
 	private DeviceInfo deviceInfo;
 
@@ -30,6 +33,10 @@ public class Controller {
 		WeatherUnlockedClient.WeatherInfo info =
 			weatherUnlockedClient.currentWeather(weatherUnlockedClient.formatLocation(deviceInfo));
 		return info.getWeather();
+	}
+
+	private String lookupWeatherYahoo() {
+		return yahooWeatherClient.currentWeather().getWeather();
 	}
 
 }

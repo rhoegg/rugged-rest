@@ -5,10 +5,18 @@ device:
   location:
     latitude: 35.46679
     longitude: -97.5343547
+    woe-id: 12789622
 api:
   weather-unlocked:
     app-id: 12345678
     key: aaaaaaaaaaaaaaaaaa
+  yahoo:
+    app-id: 12345678
+    client-id: bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb--
+    client-secret: 22222222222222222222222222222222
 weather:
   ribbon:
-    listOfServers: api.weatherunlocked.com
+    listOfServers: http://api.weatherunlocked.com
+yahoo:
+  ribbon:
+    listOfServers: https://weather-ydn-yql.media.yahoo.com
