@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-@FeignClient(name = "yahoo", url="https://weather-ydn-yql.media.yahoo.com")
+@FeignClient(name = "yahoo", url="https://weather-ydn-yql.media.yahoo.com", fallback = YahooWeatherClient.Fallback.class)
 @Service
 public interface YahooWeatherClient {
 	@RequestMapping(method = RequestMethod.GET, value = "/forecastrss", consumes = "application/xml")
@@ -29,6 +29,17 @@ public interface YahooWeatherClient {
 
 		public void setTemperature(Double temperature) {
 			this.temperature = temperature;
+		}
+	}
+
+	@Service
+	public static class Fallback implements YahooWeatherClient {
+
+		@Override public WeatherInfo currentWeather() {
+			final WeatherInfo weatherInfo = new WeatherInfo();
+			weatherInfo.setTemperature(75d);
+			weatherInfo.setWeather("Probably OK");
+			return weatherInfo;
 		}
 	}
 }
