@@ -73,4 +73,22 @@ public interface WeatherUnlockedClient {
 			template.query("app_key", config.getKey());
 		}
 	}
+
+
+	@Service
+	public static class Fallback implements WeatherUnlockedClient {
+		@Autowired
+		private YahooWeatherClient yahooWeatherClient;
+		@Autowired
+		private DeviceInfo deviceInfo;
+
+		@Override
+		public WeatherInfo currentWeather(String location) {
+			YahooWeatherClient.WeatherInfo yahooWeather = yahooWeatherClient.currentWeather();
+			WeatherInfo weather = new WeatherInfo();
+			weather.setWeather(yahooWeather.getWeather());
+			weather.setTemperature(yahooWeather.getTemperature());
+			return weather;
+		}
+	}
 }

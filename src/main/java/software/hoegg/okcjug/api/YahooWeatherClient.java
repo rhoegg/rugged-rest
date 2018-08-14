@@ -13,7 +13,7 @@ public interface YahooWeatherClient {
 
 	public static class WeatherInfo {
 		private String weather;
-		private String temperature;
+		private Double temperature;
 
 		public String getWeather() {
 			return weather;
@@ -23,11 +23,11 @@ public interface YahooWeatherClient {
 			this.weather = weather;
 		}
 
-		public String getTemperature() {
+		public Double getTemperature() {
 			return temperature;
 		}
 
-		public void setTemperature(String temperature) {
+		public void setTemperature(Double temperature) {
 			this.temperature = temperature;
 		}
 	}
